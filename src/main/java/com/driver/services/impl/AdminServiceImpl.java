@@ -29,13 +29,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin addServiceProvider(int adminId, String providerName)throws Exception {
+    public Admin addServiceProvider(int adminId, String providerName){
         Admin admin=adminRepository1.findById(adminId).get();
-        if(admin==null)
-            throw new Exception("invalid");
+//        if(admin==null)
+//            throw new Exception("invalid");
         ServiceProvider serviceProvider=serviceProviderRepository1.findServiceProviderHavingName(providerName);
-        if(serviceProvider==null)
-            throw new Exception("invalid");
+//        if(serviceProvider==null)
+//            throw new Exception("invalid");
         admin.getServiceProviders().add(serviceProvider);
         serviceProvider.setAdmin(admin);
         Admin admin1=adminRepository1.save(admin);

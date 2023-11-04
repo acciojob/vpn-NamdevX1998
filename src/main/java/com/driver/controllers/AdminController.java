@@ -24,13 +24,14 @@ public class AdminController {
     @PostMapping("/addProvider")
     public ResponseEntity addServiceProvider(@RequestParam int adminId, @RequestParam String providerName){
         //add a serviceProvider under the admin and return updated admin
-        try{
-            Admin admin = adminService.addServiceProvider(adminId, providerName);
+       // try{
+             Admin admin=adminService.addServiceProvider(adminId, providerName);
+             return new ResponseEntity(admin,HttpStatus.CREATED);
            // return new ResponseEntity<>(admin,HttpStatus.OK);
-        }catch(Exception e){
-
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+//        }catch(Exception e){
+//
+//        }
+//        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/addCountry")

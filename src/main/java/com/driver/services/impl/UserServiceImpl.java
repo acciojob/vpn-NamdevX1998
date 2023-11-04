@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(String username, String password, String countryName) throws Exception{
         Country country=countryRepository3.findCountryHavingcountryName(countryName);
-        if(country==null)
-            throw new Exception("");
+//        if(country==null)
+//            throw new Exception("");
 
         User user=new User();
         user.setUsername(username);
@@ -44,15 +44,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User subscribe(Integer userId, Integer serviceProviderId) throws Exception {
+    public User subscribe(Integer userId, Integer serviceProviderId)  {
         ServiceProvider serviceProvider=serviceProviderRepository3.findById(serviceProviderId).get();
-        if(serviceProvider==null){
-            throw new Exception("invalid");
-        }
+//        if(serviceProvider==null){
+//            throw new Exception("invalid");
+//        }
         Optional<User>optionalUser=userRepository3.findById(userId);
-        if(!(optionalUser.isPresent())){
-            throw new RuntimeException("invalid");
-        }
+//        if(!(optionalUser.isPresent())){
+//            throw new RuntimeException("invalid");
+//        }
         User user=optionalUser.get();
         user.getServiceProviderList().add(serviceProvider);
         serviceProvider.getUsers().add(user);

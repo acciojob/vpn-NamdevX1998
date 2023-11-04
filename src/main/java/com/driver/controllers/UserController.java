@@ -20,19 +20,19 @@ public class UserController {
             User user = userService.register(username, password, countryName);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
-           // return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            throw new Exception(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+           // throw new Exception(e.getMessage());
         }
     }
 
     @PutMapping("/subscribe")
     public void subscribe(@RequestParam Integer userId, @RequestParam Integer serviceProviderId){
         //subscribe to the serviceProvider by adding it to the list of providers and return updated User
-        try{
-            User user = userService.subscribe(userId, serviceProviderId);
-        }catch(Exception e){
 
-        }
+            User user = userService.subscribe(userId, serviceProviderId);
+//        }catch(Exception e){
+//            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+//        }
 
     }
 }
