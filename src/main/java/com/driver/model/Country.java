@@ -53,6 +53,10 @@ public class Country {
         this.codes = codes;
     }
 
+    public void setCode(String codes) {
+        this.codes = codes;
+    }
+
     public ServiceProvider getServiceProvider() {
         return serviceProvider;
     }
