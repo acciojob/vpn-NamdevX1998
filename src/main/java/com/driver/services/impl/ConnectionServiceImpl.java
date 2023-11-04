@@ -24,14 +24,14 @@ public class ConnectionServiceImpl implements ConnectionService {
     CountryRepository countryRepository;
 
     @Override
-    public User connect(int userId, String countryName) throws RuntimeException{
+    public User connect(int userId, String countryName) throws Exception{
         User user=userRepository2.findById(userId).get();
-        if(user==null)    throw new RuntimeException("Invalid user id");
+        if(user==null)    throw new Exception("Invalid user id");
         Country country=countryRepository.findBycountryName(countryName);
-        if(country==null)    throw new RuntimeException("Invalid country name");
+        if(country==null)    throw new Exception("Invalid country name");
         List<ServiceProvider>serviceProviders=user.getServiceProviderList();
         if(serviceProviders.size()!=0)
-            throw new RuntimeException("Already connected");
+            throw new Exception("Already connected");
         if(user.getOriginalCountry().getCountryName().toString().equalsIgnoreCase(countryName))
             return user;
         List<ServiceProvider>serviceProviderList=serviceProviderRepository2.findAllServiceProviderWithAscendingOrder();
@@ -47,19 +47,20 @@ public class ConnectionServiceImpl implements ConnectionService {
                 connection.setServiceProvider(serviceProvider);
                 user.getConnectionList().add(connection);
                 serviceProvider.getUsers().add(user);
+                serviceProvider.getConnectionList().add(connection);
                 User user1=userRepository2.save(user);
                 return user1;
             }
         }
-        throw new RuntimeException("Unable to connect");
+        throw new Exception("Unable to connect");
     }
     @Override
-    public User disconnect(int userId) throws RuntimeException {
+    public User disconnect(int userId) throws Exception {
         User user=userRepository2.findById(userId).get();
         if(user==null)
-            throw new RuntimeException("Invalid user id");
+            throw new Exception("Invalid user id");
         if(user.getConnected()==false){
-            throw new RuntimeException("Already disconnected");
+            throw new Exception("Already disconnected");
         }
         user.setMaskedIp("null");
         user.setConnected(false);
@@ -67,11 +68,11 @@ public class ConnectionServiceImpl implements ConnectionService {
         return user1;
     }
     @Override
-    public User communicate(int senderId, int receiverId) throws RuntimeException {
+    public User communicate(int senderId, int receiverId) throws Exception {
         User sender=userRepository2.findById(senderId).get();
         User receiver=userRepository2.findById(receiverId).get();
         if(sender==null || receiver==null)
-            throw new RuntimeException("invalid id");
+            throw new Exception("invalid id");
         if(sender.getOriginalCountry().getCountryName().toString().
                 equalsIgnoreCase(receiver.getOriginalCountry().getCountryName().toString())){
             return sender;

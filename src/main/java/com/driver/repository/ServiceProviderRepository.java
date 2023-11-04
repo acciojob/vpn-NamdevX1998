@@ -13,4 +13,7 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 
     @Query(value = "select * from service_provider order by id;",nativeQuery=true)
     List<ServiceProvider> findAllServiceProviderWithAscendingOrder();
+
+    @Query(value="select * from service_provider where name = :providerName;",nativeQuery=true)
+    ServiceProvider findServiceProviderHavingName(String providerName);
 }

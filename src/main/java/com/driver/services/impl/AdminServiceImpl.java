@@ -29,13 +29,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin addServiceProvider(int adminId, String providerName)throws RuntimeException {
+    public Admin addServiceProvider(int adminId, String providerName)throws Exception {
         Admin admin=adminRepository1.findById(adminId).get();
         if(admin==null)
-            throw new RuntimeException("invalid");
-        ServiceProvider serviceProvider=serviceProviderRepository1.findByName(providerName);
+            throw new Exception("invalid");
+        ServiceProvider serviceProvider=serviceProviderRepository1.findServiceProviderHavingName(providerName);
         if(serviceProvider==null)
-            throw new RuntimeException("invalid");
+            throw new Exception("invalid");
         admin.getServiceProviders().add(serviceProvider);
         serviceProvider.setAdmin(admin);
         Admin admin1=adminRepository1.save(admin);
@@ -43,10 +43,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ServiceProvider addCountry(int serviceProviderId, String countryName) throws RuntimeException{
+    public ServiceProvider addCountry(int serviceProviderId, String countryName) throws Exception{
         ServiceProvider serviceProvider=serviceProviderRepository1.findById(serviceProviderId).get();
         if(serviceProvider==null)
-            throw new RuntimeException("ServiceProvider not found");
+            throw new Exception("ServiceProvider not found");
         char ch=countryName.charAt(0);
         Country country=new Country();
         if(ch=='I' || ch=='i'){
@@ -65,7 +65,7 @@ public class AdminServiceImpl implements AdminService {
             country.setCountryName(CountryName.JPN);
             country.setCodes("005");
         }else
-            throw new RuntimeException("Country not found");
+            throw new Exception("Country not found");
 
         country.setServiceProvider(serviceProvider);
         serviceProvider.getCountryList().add(country);
