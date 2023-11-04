@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(String username, String password, String countryName) throws RuntimeException{
-        Country country=countryRepository3.findBycountryName(countryName);
+        Country country=countryRepository3.findCountryHavingcountryName(countryName);
         if(country==null)
             throw new RuntimeException("invalid country name");
 

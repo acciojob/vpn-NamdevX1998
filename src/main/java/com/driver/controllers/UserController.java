@@ -18,7 +18,7 @@ public class UserController {
         //Note that the userId is created automatically by the repository layer
         try{
             User user = userService.register(username, password, countryName);
-            return new ResponseEntity<>(user,HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
