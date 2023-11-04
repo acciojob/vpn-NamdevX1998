@@ -34,7 +34,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             throw new Exception("Already connected");
         if(user.getOriginalCountry().getCountryName().toString().equalsIgnoreCase(countryName))
             return user;
-        List<ServiceProvider>serviceProviderList=serviceProviderRepository2.findAllServiceProviderWithAscendingOrder();
+        List<ServiceProvider>serviceProviderList=serviceProviderRepository2.findAll();    //findAllServiceProviderWithAscendingOrder();
         for(ServiceProvider serviceProvider:serviceProviderList){
             List<Country>countryList=serviceProvider.getCountryList();
             if(countryList.contains(country)){
