@@ -20,7 +20,7 @@ public class UserController {
             User user = userService.register(username, password, countryName);
             return new ResponseEntity<>(user,HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
