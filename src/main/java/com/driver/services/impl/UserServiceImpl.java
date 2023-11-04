@@ -27,14 +27,14 @@ public class UserServiceImpl implements UserService {
     public User register(String username, String password, String countryName) throws RuntimeException{
         Country country=countryRepository3.findCountryHavingcountryName(countryName);
         if(country==null)
-            throw new RuntimeException("invalid country name");
+            throw new RuntimeException("");
 
         User user=new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setConnected(false);
         user.setOriginalCountry(country);
-        user.setMaskedIp("");
+        user.setMaskedIp("null");
         country.setUser(user);
         User user1=userRepository3.save(user);
         String ans=country.getCodes()+"."+user1.getId();                           //"countryCode.userId"
@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
         ServiceProvider serviceProvider=serviceProviderRepository3.findById(serviceProviderId).get();
         if(serviceProvider==null){
             throw new RuntimeException("invalid");
-
         }
         Optional<User>optionalUser=userRepository3.findById(userId);
         if(!(optionalUser.isPresent())){
@@ -62,6 +61,7 @@ public class UserServiceImpl implements UserService {
         connection.setUser(user);
         connection.setServiceProvider(serviceProvider);
         serviceProvider.getConnectionList().add(connection);
+        user.getConnectionList().add(connection);
         User user1=userRepository3.save(user);
         return user1;
     }
