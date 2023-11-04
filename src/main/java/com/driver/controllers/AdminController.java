@@ -26,7 +26,7 @@ public class AdminController {
         //add a serviceProvider under the admin and return updated admin
        // try{
              Admin admin=adminService.addServiceProvider(adminId, providerName);
-             return new ResponseEntity(admin,HttpStatus.CREATED);
+             return new ResponseEntity(HttpStatus.OK);
            // return new ResponseEntity<>(admin,HttpStatus.OK);
 //        }catch(Exception e){
 //
