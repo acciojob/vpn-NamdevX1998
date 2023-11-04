@@ -21,7 +21,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-           // throw new Exception(e.getMessage());
+
         }
     }
 
@@ -30,9 +30,6 @@ public class UserController {
         //subscribe to the serviceProvider by adding it to the list of providers and return updated User
 
             User user = userService.subscribe(userId, serviceProviderId);
-//        }catch(Exception e){
-//            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-//        }
 
     }
 }
