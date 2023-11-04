@@ -1,5 +1,6 @@
 package com.driver.controllers;
 
+import com.driver.model.User;
 import com.driver.services.impl.ConnectionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,21 +26,32 @@ public class ConnectionController {
     }
 
     @DeleteMapping("/disconnect")
-    public ResponseEntity<Void> disconnect(@RequestParam int userId) throws Exception{
+    public ResponseEntity disconnect(@RequestParam int userId) throws Exception{
         //If the given user was not connected to a vpn, throw "Already disconnected" exception.
         //Else, disconnect from vpn, make masked Ip as null, update relevant attributes and return updated user.
-        User user = connectionService.disconnect(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try{
+            User user = connectionService.disconnect(userId);
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/communicate")
-    public ResponseEntity<Void> communicate(@RequestParam int senderId, @RequestParam int receiverId) throws Exception{
+    public ResponseEntity communicate(@RequestParam int senderId, @RequestParam int receiverId) throws Exception{
         //Establish a connection between sender and receiver users
         //To communicate to the receiver, sender should be in the current country of the receiver.
         //If the receiver is connected to a vpn, his current country is the one he is connected to.
         //If the receiver is not connected to vpn, his current country is his original country.
-        //The sender is initially not connected to any vpn. If the sender's original country does not match receiver's current country, we need to connect the sender to a suitable vpn. If there are multiple options, connect using the service provider having smallest id
-        //If the sender's original country matches receiver's current country, we do not need to do anything as they can communicate. Return the sender as it is.
+        //The sender is initially not connected to any vpn. If the sender's original country does not
+        // match receiver's current country, we need to connect the sender to a suitable vpn. If there are
+        // multiple options, connect using the service provider having smallest id
+
+
+
+        //If the sender's original country matches receiver's current country, we do not need to do anything
+        //as they can communicate. Return the sender as it is.
+
         //If communication can not be established due to any reason, throw "Cannot establish communication" exception
         User updatedSender = connectionService.communicate(senderId, receiverId);
         return new ResponseEntity<>(HttpStatus.OK);
