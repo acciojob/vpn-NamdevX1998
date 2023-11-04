@@ -58,7 +58,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         User user=userRepository2.findById(userId).get();
         if(user==null)
             throw new RuntimeException("Invalid user id");
-        if(user.isConnected()==false){
+        if(user.getConnected()==false){
             throw new RuntimeException("Already disconnected");
         }
         user.setMaskedIp("null");

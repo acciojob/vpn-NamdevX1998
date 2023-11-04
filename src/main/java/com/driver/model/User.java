@@ -79,9 +79,10 @@ public class User {
         this.maskedIp = maskedIp;
     }
 
-    public boolean isConnected() {
+    public boolean getConnected() {
         return connected;
     }
+
 
     public void setConnected(boolean connected) {
         this.connected = connected;
@@ -106,8 +107,18 @@ public class User {
     public Country getCountry() {
         return country;
     }
+    public Country getOriginalCountry(){
+        return country;
+    }
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public void setOriginalCountry(Country country) {
+        this.country = country;
+    }
+    public boolean setOriginalCountry() {
+        return connected;
     }
 }
