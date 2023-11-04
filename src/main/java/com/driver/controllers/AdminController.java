@@ -15,17 +15,17 @@ public class AdminController {
     AdminServiceImpl adminService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerAdmin(@RequestParam String username, @RequestParam String password){
+    public ResponseEntity registerAdmin(@RequestParam String username, @RequestParam String password){
         //create an admin and return
         Admin admin=adminService.register(username, password);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(admin,HttpStatus.OK);
     }
 
     @PostMapping("/addProvider")
-    public ResponseEntity<Void> addServiceProvider(@RequestParam int adminId, @RequestParam String providerName){
+    public ResponseEntity addServiceProvider(@RequestParam int adminId, @RequestParam String providerName){
         //add a serviceProvider under the admin and return updated admin
         Admin admin = adminService.addServiceProvider(adminId, providerName);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(admin,HttpStatus.OK);
     }
 
     @PostMapping("/addCountry")
@@ -38,7 +38,7 @@ public class AdminController {
         //In case country name is not amongst the above mentioned strings, throw "Country not found" exception
         try{
             ServiceProvider serviceProvider = adminService.addCountry(serviceProviderId, countryName);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(serviceProvider,HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }

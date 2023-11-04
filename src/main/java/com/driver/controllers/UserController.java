@@ -12,20 +12,26 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUser(@RequestParam String username, @RequestParam String password, @RequestParam String countryName) throws Exception{
-        //create a user of given country. The originalIp of the user should be "countryCode.userId" and return the user. Note that right now user is not connected and thus connected would be false and maskedIp would be null
+    public ResponseEntity registerUser(@RequestParam String username, @RequestParam String password, @RequestParam String countryName) throws Exception{
+        //create a user of given country. The originalIp of the user should be "countryCode.userId" and return the user.
+        // Note that right now user is not connected and thus connected would be false and maskedIp would be null
         //Note that the userId is created automatically by the repository layer
         try{
             User user = userService.register(username, password, countryName);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(user,HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/subscribe")
     public void subscribe(@RequestParam Integer userId, @RequestParam Integer serviceProviderId){
         //subscribe to the serviceProvider by adding it to the list of providers and return updated User
-        User user = userService.subscribe(userId, serviceProviderId);
+        try{
+            User user = userService.subscribe(userId, serviceProviderId);
+        }catch(Exception e){
+
+        }
+
     }
 }

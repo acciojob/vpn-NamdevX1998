@@ -1,5 +1,6 @@
 package com.driver.services.impl;
 
+import com.driver.model.Connection;
 import com.driver.model.Country;
 import com.driver.model.ServiceProvider;
 import com.driver.model.User;
@@ -24,32 +25,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(String username, String password, String countryName) throws RuntimeException{
+        Country country=countryRepository3.findBycountryName(countryName);
+        if(country==null)
+            throw new RuntimeException("invalid country name");
+
         User user=new User();
         user.setUsername(username);
         user.setPassword(password);
-        Country country=countryRepository3.findBycountryName(countryName);
-        if(country==null)
-            throw new RuntimeException();
         user.setConnected(false);
-        user.setCountry(country);
+        user.setOriginalCountry(country);
+        user.setMaskedIp("");
         country.setUser(user);
         User user1=userRepository3.save(user);
-        return user1;
+        String ans=country.getCodes()+"."+user1.getId();                           //"countryCode.userId"
+        user1.setOriginalIp(ans);
+        User user2=userRepository3.save(user1);
+        return user2;
     }
 
     @Override
-    public User subscribe(Integer userId, Integer serviceProviderId) {
+    public User subscribe(Integer userId, Integer serviceProviderId) throws RuntimeException {
         ServiceProvider serviceProvider=serviceProviderRepository3.findById(serviceProviderId).get();
-        if(serviceProvider==null)
-            return null;
+        if(serviceProvider==null){
+            throw new RuntimeException("invalid");
+
+        }
         Optional<User>optionalUser=userRepository3.findById(userId);
         if(!(optionalUser.isPresent())){
-            return null;
+            throw new RuntimeException("invalid");
         }
         User user=optionalUser.get();
         user.getServiceProviderList().add(serviceProvider);
         serviceProvider.getUsers().add(user);
+        serviceProvider.getCountryList().add(user.getOriginalCountry());
+        Connection connection=new Connection();
+        connection.setUser(user);
+        connection.setServiceProvider(serviceProvider);
+        serviceProvider.getConnectionList().add(connection);
         User user1=userRepository3.save(user);
-        return user;
+        return user1;
     }
 }

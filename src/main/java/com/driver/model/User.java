@@ -104,20 +104,20 @@ public class User {
         this.connectionList = connectionList;
     }
 
-    public Country getCountry() {
+    public Country getOriginalCountry() {
         return country;
     }
-    public Country getOriginalCountry(){
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+//    public Country getOriginalCountry(){
+//        return country;
+//    }
 
     public void setOriginalCountry(Country country) {
         this.country = country;
     }
+
+//    public void setOriginalCountry(Country country) {
+//        this.country = country;
+//    }
     public Boolean setOriginalCountry() {
         return connected;
     }

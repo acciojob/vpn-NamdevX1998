@@ -32,7 +32,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         List<ServiceProvider>serviceProviders=user.getServiceProviderList();
         if(serviceProviders.size()!=0)
             throw new RuntimeException("Already connected");
-        if(user.getCountry().getCountryName().toString().equalsIgnoreCase(countryName))
+        if(user.getOriginalCountry().getCountryName().toString().equalsIgnoreCase(countryName))
             return user;
         List<ServiceProvider>serviceProviderList=serviceProviderRepository2.findAllServiceProviderWithAscendingOrder();
         for(ServiceProvider serviceProvider:serviceProviderList){
@@ -72,8 +72,8 @@ public class ConnectionServiceImpl implements ConnectionService {
         User receiver=userRepository2.findById(receiverId).get();
         if(sender==null || receiver==null)
             throw new RuntimeException("invalid id");
-        if(sender.getCountry().getCountryName().toString().
-                equalsIgnoreCase(receiver.getCountry().getCountryName().toString())){
+        if(sender.getOriginalCountry().getCountryName().toString().
+                equalsIgnoreCase(receiver.getOriginalCountry().getCountryName().toString())){
             return sender;
         }
         return receiver;
