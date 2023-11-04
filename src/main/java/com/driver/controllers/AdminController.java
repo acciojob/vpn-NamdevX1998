@@ -45,7 +45,8 @@ public class AdminController {
             ServiceProvider serviceProvider = adminService.addCountry(serviceProviderId, countryName);
             return new ResponseEntity<>(serviceProvider,HttpStatus.OK);
         }catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+           // return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            throw new Exception(e.getMessage());
         }
     }//removing <> from response entity.
 }
